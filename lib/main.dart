@@ -1,5 +1,9 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
+import 'dart:convert';
 import 'package:http/http.dart' as http;
+
+const String apiKey = 'VaOfbU4pAfH2uBpLCFDPiRhyevg6W3Ou6nShl2yh';
 
 void main() {
   runApp(const MyApp());
@@ -8,7 +12,6 @@ void main() {
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -25,6 +28,7 @@ class MyApp extends StatelessWidget {
 class MyHomePage extends StatefulWidget {
   const MyHomePage({super.key, required this.title});
 
+  // Api endPoint
   final String title;
 
   @override
@@ -33,9 +37,7 @@ class MyHomePage extends StatefulWidget {
 
 class _MyHomePageState extends State<MyHomePage> {
   double valueForSlider = 23;
-  bool _numbers = false;
-  bool _simple = false;
-  bool _capital = true;
+  bool _numbers = true;
   bool _special = true;
 
   @override
@@ -55,34 +57,27 @@ class _MyHomePageState extends State<MyHomePage> {
                 iconselect: const Icon(Icons.numbers),
                 valueSelected: _numbers),
             buildCheckboxListTile(
-                title: 'Simple Letters',
-                iconselect: const Icon(Icons.abc_sharp),
-                subtitle: 'Add simple letters to password',
-                valueSelected: _simple),
-            buildCheckboxListTile(
-                title: 'Capital Letters',
-                iconselect: const Icon(Icons.abc_sharp),
-                subtitle: 'Add capital letters to password',
-                valueSelected: _capital),
-            buildCheckboxListTile(
                 title: 'Special Characters',
                 iconselect: const Icon(Icons.hdr_auto_sharp),
                 subtitle: 'Add special characters to password',
                 valueSelected: _special),
             Text(
-              'You have $_numbers pushed the $_capital button this many times:',
+              'You have $_numbers pushed the $_special button this many times:',
             ),
             Slider.adaptive(
               min: 5,
               max: 55,
               divisions: 50,
-              label: "Higher the number, better the password",
+              label: valueForSlider.toString(),
               value: valueForSlider,
               onChanged: ((double newValueOfSlider) {
                 setState(() {
                   valueForSlider = newValueOfSlider.round().toDouble();
                 });
               }),
+            ),
+            Text(
+              'Password is ${fetchPassword().runtimeType.toString()}',
             ),
             Text(
               '${valueForSlider.toInt()}',
@@ -93,6 +88,24 @@ class _MyHomePageState extends State<MyHomePage> {
       ),
       // This trailing comma makes auto-formatting nicer for build methods.
     );
+  }
+
+  Future<String> fetchPassword() async {
+    http.Response response = await http.get(
+      Uri.parse(
+          'https://api.api-ninjas.com/v1/passwordgenerator?length=${valueForSlider.toInt()}&exclude_numbers=${!_numbers}&exclude_special_chars=${!_special}'),
+      headers: {'X-Api-Key': apiKey},
+    );
+    if (response.statusCode == 200) {
+      if (kDebugMode) {
+        print(response.body);
+      }
+    } else {
+      if (kDebugMode) {
+        print('Error: ${response.statusCode} ${response.body}');
+      }
+    }
+    return response.body;
   }
 
   CheckboxListTile buildCheckboxListTile({
@@ -111,10 +124,6 @@ class _MyHomePageState extends State<MyHomePage> {
           () {
             if (title == 'Numbers') {
               _numbers = newValue!;
-            } else if (title == 'Simple Letters') {
-              _simple = newValue!;
-            } else if (title == 'Capital Letters') {
-              _capital = newValue!;
             } else if (title == 'Special Characters') {
               _special = newValue!;
             }
