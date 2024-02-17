@@ -1,9 +1,11 @@
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:flutter/services.dart';
 
 const String apiKey = 'VaOfbU4pAfH2uBpLCFDPiRhyevg6W3Ou6nShl2yh';
+late String responseDate;
+String passwordFinal = '';
 
 void main() {
   runApp(const MyApp());
@@ -54,16 +56,14 @@ class _MyHomePageState extends State<MyHomePage> {
             buildCheckboxListTile(
                 title: 'Numbers',
                 subtitle: 'Add numbers to password',
-                iconselect: const Icon(Icons.numbers),
+                iconselect: const Icon(Icons.onetwothree),
                 valueSelected: _numbers),
             buildCheckboxListTile(
                 title: 'Special Characters',
-                iconselect: const Icon(Icons.hdr_auto_sharp),
+                iconselect: const Icon(Icons.alternate_email),
                 subtitle: 'Add special characters to password',
                 valueSelected: _special),
-            Text(
-              'You have $_numbers pushed the $_special button this many times:',
-            ),
+            Text('Select Length of password: ${valueForSlider.toInt()}'),
             Slider.adaptive(
               min: 5,
               max: 55,
@@ -73,15 +73,47 @@ class _MyHomePageState extends State<MyHomePage> {
               onChanged: ((double newValueOfSlider) {
                 setState(() {
                   valueForSlider = newValueOfSlider.round().toDouble();
+                  fetchPassword();
+
+                  // Map<String, dynamic> jsonOBJ =
+                  //     json.decode((fetchPassword()));
+                  // passwordFinal = jsonOBJ['random_password'];
+                  // print(passwordFinal);
                 });
               }),
             ),
-            Text(
-              'Password is ${fetchPassword().runtimeType.toString()}',
-            ),
-            Text(
-              '${valueForSlider.toInt()}',
-              style: Theme.of(context).textTheme.headlineMedium,
+            GestureDetector(
+              onDoubleTap: () async {
+                await AlertDialog(
+                  title: const Text('AlertDialog Title'),
+                  content: const SingleChildScrollView(
+                    child: ListBody(
+                      children: <Widget>[
+                        Text('This is a demo alert dialog.'),
+                        Text('Would you like to approve of this message?'),
+                      ],
+                    ),
+                  ),
+                  actions: <Widget>[
+                    TextButton(
+                      child: const Text('Approve'),
+                      onPressed: () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
+                  ],
+                );
+              },
+              onTap: () async {
+                await Clipboard.setData(ClipboardData(
+                    text: responseDate.substring(21, responseDate.length - 2)));
+                // copied successfully
+              },
+              child: Text(
+                responseDate.substring(21, responseDate.length - 2),
+                style:
+                    const TextStyle(fontSize: 25, fontWeight: FontWeight.bold),
+              ),
             ),
           ],
         ),
@@ -98,7 +130,8 @@ class _MyHomePageState extends State<MyHomePage> {
     );
     if (response.statusCode == 200) {
       if (kDebugMode) {
-        print(response.body);
+        responseDate = response.body;
+        print(responseDate);
       }
     } else {
       if (kDebugMode) {
