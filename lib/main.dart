@@ -36,12 +36,6 @@ class _MyHomePageState extends State<MyHomePage> {
   bool _simple = false;
   bool _capital = true;
   bool _special = true;
-  int _counter = 0;
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -57,21 +51,21 @@ class _MyHomePageState extends State<MyHomePage> {
             buildCheckboxListTile(
                 title: 'Numbers',
                 subtitle: 'Add numbers to password',
-                iconselect: Icon(Icons.numbers),
+                iconselect: const Icon(Icons.numbers),
                 valueSelected: _numbers),
             buildCheckboxListTile(
                 title: 'Simple Letters',
-                iconselect: Icon(Icons.abc_sharp),
+                iconselect: const Icon(Icons.abc_sharp),
                 subtitle: 'Add simple letters to password',
                 valueSelected: _simple),
             buildCheckboxListTile(
                 title: 'Capital Letters',
-                iconselect: Icon(Icons.abc_sharp),
+                iconselect: const Icon(Icons.abc_sharp),
                 subtitle: 'Add capital letters to password',
                 valueSelected: _capital),
             buildCheckboxListTile(
                 title: 'Special Characters',
-                iconselect: Icon(Icons.hdr_auto_sharp),
+                iconselect: const Icon(Icons.hdr_auto_sharp),
                 subtitle: 'Add special characters to password',
                 valueSelected: _special),
             Text(
