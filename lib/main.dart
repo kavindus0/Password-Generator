@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 
 void main() {
   runApp(const MyApp());
@@ -72,16 +73,17 @@ class _MyHomePageState extends State<MyHomePage> {
               'You have $_numbers pushed the $_capital button this many times:',
             ),
             Slider.adaptive(
-                min: 5,
-                max: 55,
-                divisions: 50,
-                label: valueForSlider.round().toString(),
-                value: valueForSlider,
-                onChanged: ((double newValueOfSlider) {
-                  setState(() {
-                    valueForSlider = newValueOfSlider.round().toDouble();
-                  });
-                })),
+              min: 5,
+              max: 55,
+              divisions: 50,
+              label: "Higher the number, better the password",
+              value: valueForSlider,
+              onChanged: ((double newValueOfSlider) {
+                setState(() {
+                  valueForSlider = newValueOfSlider.round().toDouble();
+                });
+              }),
+            ),
             Text(
               '${valueForSlider.toInt()}',
               style: Theme.of(context).textTheme.headlineMedium,
