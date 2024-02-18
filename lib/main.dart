@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 const String apiKey = 'VaOfbU4pAfH2uBpLCFDPiRhyevg6W3Ou6nShl2yh';
+String password = '';
 
 void main() {
   runApp(const MyApp());
@@ -36,7 +37,7 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  double valueForSlider = 23;
+  double valueForSlider = 10;
   bool _numbers = true;
   bool _special = true;
 
@@ -61,8 +62,9 @@ class _MyHomePageState extends State<MyHomePage> {
                 iconselect: const Icon(Icons.hdr_auto_sharp),
                 subtitle: 'Add special characters to password',
                 valueSelected: _special),
+            SizedBox.fromSize(size: const Size.fromHeight(20)),
             Text(
-              'You have $_numbers pushed the $_special button this many times:',
+              'Lenght of Password ${valueForSlider.toInt()}',
             ),
             Slider.adaptive(
               min: 5,
@@ -73,15 +75,22 @@ class _MyHomePageState extends State<MyHomePage> {
               onChanged: ((double newValueOfSlider) {
                 setState(() {
                   valueForSlider = newValueOfSlider.round().toDouble();
+                  fetchPassword();
                 });
               }),
             ),
-            Text(
-              'Password is ${fetchPassword().runtimeType.toString()}',
+            Padding(
+              padding: const EdgeInsets.all(12.0),
+              child: FittedBox(
+                  fit: BoxFit.scaleDown,
+                  child: Text(
+                    password,
+                    style: const TextStyle(fontSize: 15.5),
+                  )),
             ),
             Text(
               '${valueForSlider.toInt()}',
-              style: Theme.of(context).textTheme.headlineMedium,
+              style: TextStyle(fontSize: 20),
             ),
           ],
         ),
@@ -97,9 +106,9 @@ class _MyHomePageState extends State<MyHomePage> {
       headers: {'X-Api-Key': apiKey},
     );
     if (response.statusCode == 200) {
-      if (kDebugMode) {
-        print(response.body);
-      }
+      setState(() {
+        password = jsonDecode(response.body)['random_password'];
+      });
     } else {
       if (kDebugMode) {
         print('Error: ${response.statusCode} ${response.body}');
@@ -122,6 +131,7 @@ class _MyHomePageState extends State<MyHomePage> {
       onChanged: (bool? newValue) {
         setState(
           () {
+            fetchPassword();
             if (title == 'Numbers') {
               _numbers = newValue!;
             } else if (title == 'Special Characters') {
