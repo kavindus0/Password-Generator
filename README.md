@@ -21,7 +21,8 @@ Digital security is paramount in today's interconnected world. By creating a rob
 To get started with the Password Generator App, follow these steps:
 Download the Application in the release directory or Clone the repository:
    ```sh
-   git clone https://github.com/kavindus0/password-generator.git ```
+   git clone https://github.com/kavindus0/password-generator.git
+```
 # Dependencies
  - flutter
  - http
