@@ -62,7 +62,6 @@ class _MyHomePageState extends State<MyHomePage> {
                 iconselect: const Icon(Icons.hdr_auto_sharp),
                 subtitle: 'Add special characters to password',
                 valueSelected: _special),
-            SizedBox.fromSize(size: const Size.fromHeight(20)),
             Text(
               'Lenght of Password ${valueForSlider.toInt()}',
             ),
@@ -79,18 +78,13 @@ class _MyHomePageState extends State<MyHomePage> {
                 });
               }),
             ),
-            Padding(
-              padding: const EdgeInsets.all(12.0),
-              child: FittedBox(
-                  fit: BoxFit.scaleDown,
-                  child: Text(
-                    password,
-                    style: const TextStyle(fontSize: 15.5),
-                  )),
-            ),
-            Text(
-              '${valueForSlider.toInt()}',
-              style: TextStyle(fontSize: 20),
+            FittedBox(
+              fit: BoxFit.fitWidth,
+              child: Text(
+                password,
+                style: TextStyle(fontSize: 18),
+                // style: const TextStyle(fontSize: 20.5),
+              ),
             ),
           ],
         ),
