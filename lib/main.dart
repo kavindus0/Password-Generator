@@ -1,3 +1,4 @@
+import 'package:flutter/services.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'dart:convert';
@@ -101,7 +102,9 @@ class _MyHomePageState extends State<MyHomePage> {
             ),
             Center(
               child: TextButton(
-                  onPressed: () {},
+                  onPressed: () {
+                    Clipboard.setData(ClipboardData(text: password));
+                  },
                   child: const Padding(
                     padding: EdgeInsets.all(8.0),
                     child: Row(
