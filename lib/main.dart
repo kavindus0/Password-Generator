@@ -57,13 +57,23 @@ class _MyHomePageState extends State<MyHomePage> {
                 subtitle: 'Add numbers to password',
                 iconselect: const Icon(Icons.numbers),
                 valueSelected: _numbers),
+            SizedBox.fromSize(
+              size: const Size(0, 30),
+            ),
             buildCheckboxListTile(
                 title: 'Special Characters',
                 iconselect: const Icon(Icons.hdr_auto_sharp),
                 subtitle: 'Add special characters to password',
                 valueSelected: _special),
+            SizedBox.fromSize(
+              size: const Size(0, 30),
+            ),
             Text(
-              'Lenght of Password ${valueForSlider.toInt()}',
+              'Lenght of Password is ${valueForSlider.toInt()} digits',
+              style: const TextStyle(fontSize: 20),
+            ),
+            SizedBox.fromSize(
+              size: const Size(0, 30),
             ),
             Slider.adaptive(
               min: 5,
@@ -78,14 +88,31 @@ class _MyHomePageState extends State<MyHomePage> {
                 });
               }),
             ),
-            FittedBox(
-              fit: BoxFit.fitWidth,
-              child: Text(
-                password,
-                style: TextStyle(fontSize: 18),
-                // style: const TextStyle(fontSize: 20.5),
-              ),
+            SizedBox.fromSize(
+              size: const Size(0, 30),
             ),
+            Text(
+              password,
+              style: const TextStyle(fontSize: 18),
+              // style: const TextStyle(fontSize: 20.5),
+            ),
+            SizedBox.fromSize(
+              size: const Size(0, 10),
+            ),
+            Center(
+              child: TextButton(
+                  onPressed: () {},
+                  child: const Padding(
+                    padding: EdgeInsets.all(8.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text('Copy to Clipboard   '),
+                        Icon(Icons.copy_sharp)
+                      ],
+                    ),
+                  )),
+            )
           ],
         ),
       ),
