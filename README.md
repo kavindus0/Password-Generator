@@ -29,10 +29,13 @@ Download the Application in the release directory or Clone the repository:
    
 # Usage
 
-Upon launching the app, users can customize the password length using the slider.
-Users can toggle options to include numbers and special characters in the generated password.
-The generated password is displayed on the screen.
-Users can copy the generated password to the clipboard by clicking the "Copy to Clipboard" button.
+- Upon launching the app, users can customize the password length using the slider.
+
+- Users can toggle options to include numbers and special characters in the generated password.
+
+- The generated password is displayed on the screen.
+
+- Users can copy the generated password to the clipboard by clicking the "Copy to Clipboard" button.
 
 # Contributing
 
