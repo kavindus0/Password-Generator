@@ -1,4 +1,4 @@
-# Password Generator App for osX, iOS and WebView
+# Password Generator App for OsX, iOS and WebView
 
 ![Simulator-Screen-Recording-iPhone-15-2024-02-18-at-23 37 27](https://github.com/kavindus0/Password-Generator/assets/126804361/3f26f55e-0cce-4132-8274-3de6721d9087)
 
